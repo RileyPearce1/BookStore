@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"> <!--подключение шаблонизатора thymeleaf-->
+<head>
+    <title>Корзина</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css"> <!--подключение файлов css-->
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+<div class="container mt-5">
+    <!--container - встроенный класс, добавляющий отступы. mt-5 - отступы сверху, равные 5-ти пикс-->
+    <h1>Корзина</h1>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <div class="col an" th:each="el : ${userBasket}" >
+                    <div class="card shadow-sm blocks">
+                        <img class="himg" th:src="${el.img}" width="338" height="220">
+                        <div class="card-body">
+                            <h5 th:text="${el.title}"/>
+                            <p th:utext="${el.author}"/>
+                            <!--                                <a><b>Дата мероприятия: </b><a th:text="${el.date}"></a></a>-->
+                            <p><b>Дата выпуска: </b><td th:text="${#dates.format(el.date, 'dd MMMM yyyy')}"></td></p>
+                        </div>
+                        <div class="btn-cont">
+                            <a th:href="'/book/' + ${el.id}" class="btn" style="color: #fff; background-color: #ef2323; border-color: #ef2323">Детальнее</a>
+                        </div>
+                        <form th:action="'/book/' + ${el.id} + '/removeFromBasket'" method="post"> <!--method="book" - информация передаётся в теле запроса-->
+                            <button class="btn btn-warning" style="color: #fff; background-color: #ef2323; border-color: #ef2323" type="submit">Убрать из корзины</button> <!--type="submit" - перезагрузка страницы и отправка данных на сервер при нажатии на кнопку-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+</body>
+</html>

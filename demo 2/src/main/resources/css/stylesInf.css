@@ -1,0 +1,127 @@
+.text-red {
+    color: #ef2323;
+}
+
+.abc {
+    margin-bottom: 4em;
+}
+
+.ot{
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.H1{
+    margin: 0 0 1em 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.typography ul li::before {
+    content: "—";
+    position: absolute;
+    margin-left: -1.53846em;
+    color: #880e4f;
+    text-align: justify;
+}
+
+.advantages-items .advantages-item {
+    padding-left: 4.61538em;
+    margin-left: 3em;
+    color: #000;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.advantages span {
+    position: absolute;
+    height: 1.92308em;
+    min-width: 1.92308em;
+    padding-left: .19231em;
+    padding-right: .19231em;
+    margin-left: -2.26923em;
+    border: 3px solid #ef2323;
+    border-radius: 50%;
+    color: #ef2323;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.76923em;
+}
+
+.headline {
+    margin-bottom: 0.45em;
+    margin-top: 1em;
+    overflow: hidden;
+    line-height: 1.25;
+}
+
+p {
+    margin: 0 0 .769em 0;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    text-align: justify;
+}
+
+.advantages {
+    margin-top: 2.23077em;
+    margin-bottom: 50px;
+}
+
+.advantages-items {
+    padding-left: 0;
+    margin-bottom: .46154em;
+}
+
+.Ul {
+    list-style-type: none;
+}
+
+.ol1{
+    margin-left: -7.5em;
+}
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.typography {
+  margin-left: 150px;
+  margin-right: 150px;
+  }
+
+.btn-danger {
+    color: #fff;
+    background-color: #ef2323;
+    border-color: #ef2323;
+}
+
+.bm{
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+.attribute {
+    color: #000000;
+    font-weight: bold;
+}
+
+.vv{
+    margin-top: 5px;
+}
+
+

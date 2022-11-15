@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"> <!--подключение шаблонизатора thymeleaf-->
+<head>
+    <title>Книги</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css"> <!--подключение файлов css-->
+</head>
+<body>
+    <header th:insert="blocks/header :: header"></header>
+    <!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+    <div class="container mt-5">
+        <!--container - встроенный класс, добавляющий отступы. mt-5 - отступы сверху, равные 5-ти пикс-->
+        <h1>Книги</h1>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <div class="btn-group"><a th:href="'/book/add'" class="btn an" style="color: #fff; background-color: #ef2323; border-color: #ef2323">Добавить книгу</a></div>
+        </div>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    <div class="col an" th:each="el : ${books}" >
+                        <div class="card shadow-sm blocks">
+                            <img class="himg" th:src="${el.img}" width="338" height="220">
+                            <div class="card-body">
+                                <h5 th:text="${el.title}"/>
+                                <p th:utext="${el.author}"/>
+                                <p><b>Цена:</b><td th:text="${el.price}"></td></p>
+<!--                                <a><b>Дата мероприятия: </b><a th:text="${el.date}"></a></a>-->
+                                <p><b>Дата выпуска: </b><td th:text="${#dates.format(el.date, 'dd MMMM yyyy')}"></td></p>
+                            </div>
+                            <div class="btn-cont">
+                                <a th:href="'/book/' + ${el.id}" class="btn" style="color: #fff; background-color: #ef2323; border-color: #ef2323">Детальнее</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- разбиение на страницы -->
+
+<!--            <nav aria-label="Page navigation" class="paging">-->
+<!--                <ul class="pagination" th:if="${employees.page.totalPages > 1}">-->
+<!--                    <li class="page-item" th:classappend="${!employees.paging.isPrevEnabled()? 'disabled' : ''}">-->
+<!--                        <a class="page-link" th:href="@{'/?pageNumber=' + ${employees.paging.pageNumber - 1}}"-->
+<!--                           tabindex="-1">Previous</a>-->
+<!--                    </li>-->
+<!--                    <th:block th:each="item : ${employees.paging.getItems()}">-->
+<!--                        <li class="page-item" th:classappend="${item.index == employees.paging.pageNumber? 'active' : ''}"-->
+<!--                            th:if="${item.pageItemType.name() == 'PAGE'}">-->
+<!--                            <a class="page-link" th:href="@{'/?pageNumber=' + ${item.index}}"-->
+<!--                               th:text="${item.index}"></a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">-->
+<!--                            <a class="page-link" href="#">...</a>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
+<!--                    <li class="page-item" th:classappend="${!employees.paging.isNextEnabled()? 'disabled' : ''}">-->
+<!--                        <a class="page-link" th:href="@{'/?pageNumber=' + ${employees.paging.pageNumber + 1}}">Next</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+
+<!--            <nav aria-label="Pagination" th:if="${books.totalPages gt 0}">-->
+<!--                <ul class="pagination justify-content-center font-weight-bold">-->
+<!--                    <li class="page-item" th:classappend="${books.number eq 0} ? 'disabled'">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/books?page={id}(id=${books.number lt 2 ? 1 : books.number})}"-->
+<!--                           aria-label="Previous" title="Previous Page" data-toggle="tooltip">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:classappend="${i eq books.number + 1} ? 'active'"-->
+<!--                        th:each="i : ${#numbers.sequence( 1, books.totalPages, 1)}">-->
+<!--                        <a class="page-link" th:href="@{/books?page={id}(id=${i})}" th:text="${i}"-->
+<!--                           th:title="${'Page '+ i}" data-toggle="tooltip"></a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:classappend="${books.number + 1 eq books.totalPages} ? 'disabled'">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/books?page={id}(id=${books.number + 2})}"-->
+<!--                           aria-label="Next" title="Next Page" data-toggle="tooltip">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+
+<!--            <nav aria-label="Навигация">-->
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" href="#" aria-label="Предыдущая">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" href="#" aria-label="Следующая">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+
+
+        </div>
+
+
+    </div>
+    <!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+</body>
+</html>

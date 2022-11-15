@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:hidden="http://www.w3.org/1999/xhtml"> <!--подключение шаблонизатора thymeleaf-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+<head>
+    <title>Книга</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!--подключение css файла-->
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+<div class="container mt-5">
+    <h1>Книга</h1>
+    <!--container - встроенный класс, добавляющий отступы. mt-5 - отступы сверху, равные 5-ти пикс-->
+    <div th:each="el : ${book}" class="album py-5 bg-light det" style="padding-left: 20px; padding-right: 20px;"> <!--вывод записей перебором через цикл. el(переменная) : (указание того, что мы перебираем)-->
+        <h1 th:text="${el.title}"></h1> <!--обращение к полю title-->
+        <img class="himg" th:src="${el.img}" width="400" height="300">
+        <p style="padding-top: 15px; padding-bottom: 15px;"><b>Дата выпуска: </b><td th:text="${#dates.format(el.date, 'dd MMMM yyyy')}"></td></p>
+        <p th:utext="${el.fullText}"/>
+        <b>Автор:</b>
+        <p th:text="${el.author}"/>
+        <b>Цена:</b>
+        <p th:text="${el.price}"/>
+        <b>ISBN</b>
+        <p th:text="${el.ISBN}"/>
+        <div>
+            <div style="display: inline-flex;">
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="'/book/' + ${el.id} + '/edit'" class="btn btn-warning" style="margin-right: 7px; color: #fff; background-color: #ef2323; border-color: #ef2323">Редактировать</a> <!--ссылка на редактирование статьи-->
+                <!--            <a th:action="'/activity/' + ${el.id} + '/remove'" class="btn btn-warning btn-danger" type="submit" method="book">Удалить</a>-->
+                <form sec:authorize="hasAuthority('ADMIN')" th:action="'/book/' + ${el.id} + '/remove'" method="post"> <!--method="book" - информация передаётся в теле запроса-->
+                    <button class="btn btn-warning" style="color: #fff; background-color: #ef2323; border-color: #ef2323" type="submit">Удалить</button> <!--type="submit" - перезагрузка страницы и отправка данных на сервер при нажатии на кнопку-->
+                </form>
+                <p>&nbsp&nbsp</p>
+                <form th:if="${isInBasket} == false" th:action="'/book/' + ${el.id} + '/addToBasket'" method="post"> <!--method="book" - информация передаётся в теле запроса-->
+                    <button class="btn btn-warning" style="color: #fff; background-color: #ef2323; border-color: #ef2323" type="submit">Добавить в корзину</button> <!--type="submit" - перезагрузка страницы и отправка данных на сервер при нажатии на кнопку-->
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--insert - встраивает фрагмент внутрь тега "путь :: фрагмент"-->
+</body>
+</html>

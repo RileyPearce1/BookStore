@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"> <!--подключение шаблонизатора thymeleaf-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="css/styles.css">-->
+<div style="background-color: black" th:fragment="header"> <!--указание того, что это фрагмент-->
+    <header class="site-header sticky-top py-1">
+        <nav class="container d-flex flex-column flex-md-row justify-content-between hpl">
+            <a class="py-2 d-none d-md-inline-block attribute vv" href="/home"><ya-tr-span data-index="0-0" data-value="Main" data-translation="Главная" data-type="trSpan" style="color: white">Главная</ya-tr-span></a><!--color="#212529"-->
+            <a class="py-2 d-none d-md-inline-block attribute vv" href="/genres"><ya-tr-span data-index="0-0" data-value="Katalog" data-translation="Каталог" data-type="trSpan" style="color: white">Каталог</ya-tr-span></a><!--color="#212529"-->
+            <a class="py-2 d-none d-md-inline-block attribute vv" href="/basket"><ya-tr-span data-index="0-0" data-value="Br" data-translation="Корзина" data-type="trSpan" style="color: white">Корзина</ya-tr-span></a>
+<!--            <a class="py-2 d-none d-md-inline-block attribute vv" href="/contact"><ya-tr-span data-index="0-0" data-value="Contact" data-translation="Связь" data-type="trSpan">Связь</ya-tr-span></a>-->
+            <div sec:authorize="isAnonymous()" class="btn-group">
+                <form>
+                    <a class="btn vv" style="color: #fff; background-color: #ef2323; border-color: #fff" href="/login">Войти</a>
+                </form>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn vv" type="submit" style="color: #fff; background-color: #ef2323; border-color: #fff">Выйти</button>
+                </form>
+            </div>
+
+        </nav>
+    </header>
+</div>

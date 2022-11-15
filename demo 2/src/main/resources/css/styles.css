@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto');
+.himg{
+    height: 220px;
+}
+
+.hpl{
+    padding-left: 50px;
+}
+
+.bs{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.bm{
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+.size{
+    height: 38px;
+    width: 154px;
+}
+
+.attribute {
+    color: #000000;
+    font-weight: bold;
+}
+
+.an{
+    margin-bottom: 15px;
+}
+
+.an1{
+    margin-top: 50px;
+}
+
+.blocks{
+   height: 500px;
+}
+
+.blocksDoc{
+   height: 470px;
+}
+
+.vv{
+    margin-top: 5px;
+}
+
+.tc{
+    color: #000000;
+}
+
+.det{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-cont {
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.img:hover{
+    transform: scale(1.1);
+    height: 470px;
+    width: 340px;
+}
+
+.btnline{
+    float: left;
+}
