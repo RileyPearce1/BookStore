@@ -1,0 +1,122 @@
+plugins {
+    id 'idea'
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
+}
+
+idea {
+    project {
+        languageLevel = JavaVersion.VERSION_11
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+group = 'org.riley'
+version = '0.0.1'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+ext {
+    javaxValidVersion = "2.0.1.Final"
+    javaxPersistenceVersion = "2.2"
+    gsonVersion = "2.9.0"
+    lombokMapstructBindingVersion = "0.2.0";
+    mapstructVersion = "1.5.0.RC1"
+    lombokVersion = "1.18.24"
+    hibernateVersion = "5.5.5.Final"
+    hibernateTypesVersion = "2.4.3"
+    openApiVersion = "1.6.8"
+    jsonwebtokenVersion = "0.9.1"
+    apacheCommonsVersion = "3.12.0"
+    thymeleafVersion = "3.0.11.RELEASE"
+    thymeleafDialectVersion = "3.1.0"
+    springDataCommonsVersion = "2.3.2.RELEASE"
+    jakartaPersistenceVersion = "2.2.3"
+    log4jdbcVersion = "2.0.0"
+}
+
+dependencies {
+    // Spring Starters & other Spring dependencies
+    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    //implementation "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
+
+
+    // Utils & Helpers dependencies
+    implementation "org.apache.commons:commons-lang3:$apacheCommonsVersion"
+    implementation "javax.validation:validation-api:$javaxValidVersion"
+    implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceVersion}"
+
+    // log4jdbc
+    implementation "com.integralblue:log4jdbc-spring-boot-starter:${log4jdbcVersion}"
+
+    // THYMELEAF
+    implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafDialectVersion"
+    implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
+    implementation "org.thymeleaf:thymeleaf-spring5:${thymeleafVersion}"
+    // JWT token
+    implementation "io.jsonwebtoken:jjwt:$jsonwebtokenVersion"
+
+    // OpenAPI 3.0 with Swagger 2.0
+    implementation "org.springdoc:springdoc-openapi-webmvc-core:$openApiVersion"
+    implementation "org.springdoc:springdoc-openapi-ui:$openApiVersion"
+    implementation "org.springdoc:springdoc-openapi-data-rest:$openApiVersion"
+
+    // Lombok + MapStruct
+    implementation "org.mapstruct:mapstruct:$mapstructVersion",
+            "org.projectlombok:lombok:$lombokVersion",
+            "org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBindingVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}",
+            "org.projectlombok:lombok:$lombokVersion",
+            "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+
+configurations.all {
+    exclude module: 'slf4j-log4j12'
+}
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+tasks.named("bootJar") {
+    mainClass = 'org.riley.bookstore.BookStoreApplication'
+    archiveName = "$baseName.$extension"
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

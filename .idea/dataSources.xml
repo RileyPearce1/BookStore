@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="webbook@localhost" uuid="4f0b3328-1b9b-4ee4-9f14-bcc761b936dd">
+    <data-source source="LOCAL" name="webhook@localhost" uuid="9c61ab77-f75d-4863-a89b-3bec70dcfc28">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/webbook</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/webhook</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

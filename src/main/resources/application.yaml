@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  profiles:
+    active: default
+  main:
+    allow-circular-references: true
+  application:
+    name: book-store
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webbook
+    username: postgres
+    password: Pershakov757
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          import_files: init.sql
+          auto: create-drop
+        format_sql: false
+        generate_statistics: false
+  sql.init.mode: never
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    jdbc:
+      sqlonly: DEBUG
+
+log4jdbc:
+  drivers: org.postgresql.Driver
+  auto:
+    load:
+      popular:
+        drivers: false
+  dump:
+    sql:
+      select: true
+      update: true
+      insert: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /rest-api-docs
+  swagger-ui:
+    path: /swagger-ui
