@@ -38,20 +38,3 @@ spec:
               value: postgres
             - name: DATABASE_PASS
               value: "12345"
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /actuator/health/readiness
-              port: 8095
-            periodSeconds: 20
-            successThreshold: 1
-            timeoutSeconds: 2
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8095
-            periodSeconds: 20
-            successThreshold: 1
-            timeoutSeconds: 2
-            initialDelaySeconds: 15

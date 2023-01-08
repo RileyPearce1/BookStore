@@ -64,14 +64,3 @@ springdoc:
     path: /rest-api-docs
   swagger-ui:
     path: /swagger-ui
-
-management:
-  server:
-    port: 8095
-  endpoints:
-    enabled-by-default: false
-  endpoint:
-    health:
-      enabled: true
-      probes:
-        enabled: true
