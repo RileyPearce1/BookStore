@@ -84,6 +84,7 @@ deploy-in-kubernetes:
           # Деплой book-store
           kubectl apply -f book-store/service_book-store.yaml
           kubectl apply -f book-store/ingress_book-store.yaml
+          kubectl apply -f book-store/deploy_book-store.yaml
           kubectl rollout restart deployment book-store
       fi
   after_script:

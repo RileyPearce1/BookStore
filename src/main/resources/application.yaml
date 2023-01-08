@@ -16,31 +16,35 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/webbook
     username: postgres
-    password: 12345
+    password: Pershakov757
     driverClassName: org.postgresql.Driver
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true
     defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
     show-sql: false
-    generate-ddl: false
     properties:
       hibernate:
-        hbm2ddl:
-          import_files: init.sql
-          auto: none
         format_sql: false
         generate_statistics: false
+        hbm2ddl:
+          import_files: init.sql
+          auto: create
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
   sql.init.mode: never
 
 logging:
   level:
-    org.springframework.orm.jpa: DEBUG
+    org.springframework.orm.jpa: ERROR
     jdbc:
-      sqlonly: DEBUG
+      sqlonly: ERROR
+      audit: ERROR
+      sqltiming: DEBUG
+      resultset: ERROR
+      connection: ERROR
 
 log4jdbc:
   drivers: org.postgresql.Driver
