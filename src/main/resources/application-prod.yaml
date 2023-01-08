@@ -28,10 +28,10 @@ spring:
         generate_statistics: false
         hbm2ddl:
           import_files: init.sql
-          auto: create
+          auto: none
     hibernate:
-      ddl-auto: create
-    generate-ddl: true
+      ddl-auto: none
+    generate-ddl: false
   sql.init.mode: never
 
 logging:
