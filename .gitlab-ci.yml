@@ -6,7 +6,7 @@ stages:
 variables:
   GIT_SSL_NO_VERIFY: 1
 
-build_job:
+.build_job:
   stage: build
   only:
     - master
@@ -15,7 +15,7 @@ build_job:
     # ToDo: Как допишу тесты, добавить ещё один стейдж 'test'
     - ./gradlew clean build -x test -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
 
-assemble_job:
+.assemble_job:
   stage: build
   only:
     - master
@@ -24,7 +24,7 @@ assemble_job:
     - ./gradlew assemble -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
   # ToDo: разобраться с передачей *.jar-ников в push-to-docker-hub через artifacts/cache
 
-push-to-docker-hub:
+.push-to-docker-hub:
   stage: release
   only:
     - master
@@ -33,7 +33,7 @@ push-to-docker-hub:
     # jib.dependsOn(bootJar) in build.gradle
     - ./gradlew jib -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
 
-create-kind-cluster:
+.create-kind-cluster:
   stage: deploy
   only:
     - master
