@@ -7,16 +7,14 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-  profiles:
-    active: default
   main:
     allow-circular-references: true
   application:
     name: book-store
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT:5432}/${DATABASE_NAME}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASS}
+    url: jdbc:postgresql://${DATABASE_HOST:postgres}:${DATABASE_PORT:5432}/${DATABASE_NAME:stock_system}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASS:12345}
     driverClassName: org.postgresql.Driver
   jpa:
     database: postgresql
@@ -54,9 +52,11 @@ log4jdbc:
         drivers: false
   dump:
     sql:
+      create: true
       select: true
       update: true
       insert: true
+      delete: true
 
 springdoc:
   api-docs:

@@ -54,9 +54,11 @@ log4jdbc:
         drivers: false
   dump:
     sql:
+      create: true
       select: true
       update: true
       insert: true
+      delete: true
 
 springdoc:
   api-docs:

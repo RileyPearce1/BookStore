@@ -31,13 +31,13 @@ spec:
             - name: DATABASE_HOST
               value: postgres
             - name: DATABASE_PORT
-              value: 5432
+              value: "5432"
             - name: DATABASE_NAME
               value: stock_system
             - name: DATABASE_USER
               value: postgres
             - name: DATABASE_PASS
-              value: 12345
+              value: "12345"
           readinessProbe:
             failureThreshold: 3
             httpGet:
