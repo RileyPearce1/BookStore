@@ -1,0 +1,66 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  profiles:
+    active: default
+  main:
+    allow-circular-references: true
+  application:
+    name: book-store
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT:5432}/${DATABASE_NAME}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
+    open-in-view: true
+    defer-datasource-initialization: true
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        generate_statistics: false
+        hbm2ddl:
+          import_files: init.sql
+          auto: create
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+  sql.init.mode: never
+
+logging:
+  level:
+    org.springframework.orm.jpa: OFF
+    jdbc:
+      sqlonly: OFF
+      audit: OFF
+      sqltiming: OFF
+      resultset: OFF
+      connection: OFF
+
+log4jdbc:
+  drivers: org.postgresql.Driver
+  auto:
+    load:
+      popular:
+        drivers: false
+  dump:
+    sql:
+      select: true
+      update: true
+      insert: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /rest-api-docs
+  swagger-ui:
+    path: /swagger-ui

@@ -1,7 +1,6 @@
 package org.riley.bookstore.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -17,14 +16,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    protected final Log logger = LogFactory.getLog(this.getClass());
+@Slf4j
+public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-    public MySimpleUrlAuthenticationSuccessHandler() {
-        super();
-    }
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     // Принимает запрос на авторизацию и очищает временные данные
     @Override
@@ -37,7 +32,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
         final String targetUrl = determineTargetUrl(authentication);
         if (response.isCommitted()) {
-            logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
+            log.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
         }
         redirectStrategy.sendRedirect(request, response, targetUrl);

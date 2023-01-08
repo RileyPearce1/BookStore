@@ -1,0 +1,27 @@
+jib {
+
+    from {
+        image = 'openjdk:11-jre-slim-buster'
+
+        auth {
+            username(project.hasProperty('DOCKERHUB_USERNAME') ? project['DOCKERHUB_USERNAME'] : '')
+            password(project.hasProperty('DOCKERHUB_PASSWORD') ? project['DOCKERHUB_PASSWORD'] : '')
+        }
+    }
+
+    to {
+        tags = ["latest"]
+        image = "devalurum/book-store"
+
+        auth {
+            username(project.hasProperty('DOCKERHUB_USERNAME') ? project['DOCKERHUB_USERNAME'] : '')
+            password(project.hasProperty('DOCKERHUB_PASSWORD') ? project['DOCKERHUB_PASSWORD'] : '')
+        }
+    }
+
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        ports = ['8085']
+        args = ['']
+    }
+}

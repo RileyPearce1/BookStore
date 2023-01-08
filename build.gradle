@@ -2,8 +2,11 @@ plugins {
     id 'idea'
     id 'org.springframework.boot' version '2.7.2'
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'com.google.cloud.tools.jib' version '3.3.0'
     id 'java'
 }
+
+apply from: 'jib.gradle'
 
 idea {
     project {
@@ -120,3 +123,6 @@ tasks.withType(JavaCompile) {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.jib.dependsOn(bootJar)
+tasks.jibDockerBuild.dependsOn(bootJar)

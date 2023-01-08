@@ -9,22 +9,23 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Role implements GrantedAuthority {
 
     @Id
+    @NonNull
     private Long id;
 
+    @NonNull
     private String name;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
     private Set<User> users;
 
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Override
     public String getAuthority() {

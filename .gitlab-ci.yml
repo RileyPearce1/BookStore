@@ -1,0 +1,97 @@
+stages:
+  - build
+  - release
+  - deploy
+
+variables:
+  GIT_SSL_NO_VERIFY: 1
+
+build_job:
+  stage: build
+  only:
+    - master
+  allow_failure: false
+  script:
+    # ToDo: Как допишу тесты, добавить ещё один стейдж 'test'
+    - ./gradlew clean build -x test -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
+
+assemble_job:
+  stage: build
+  only:
+    - master
+  allow_failure: false
+  script:
+    - ./gradlew assemble -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
+  # ToDo: разобраться с передачей *.jar-ников в push-to-docker-hub через artifacts/cache
+
+push-to-docker-hub:
+  stage: release
+  only:
+    - master
+  allow_failure: false
+  script:
+    # jib.dependsOn(bootJar) in build.gradle
+    - ./gradlew jib -PDOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -PDOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD"
+
+create-kind-cluster:
+  stage: deploy
+  only:
+    - master
+  allow_failure: false
+  before_script:
+    - check_kind_cluster=$(kind get clusters)
+  script:
+    - |-
+      if [[ $check_kind_cluster == "kind" ]]; then
+          echo "Кластер готов."
+      else 
+          kind create cluster --config=kubernetes/kind-config.yaml --kubeconfig $KUBECONFIG
+      fi
+  after_script:
+    - kind get clusters
+
+# ToDo: По хорошему нужно обновлять deployments через kubectl patch/set по id коммита,
+# чтобы у каждого тэга docker-контейнера была версия с id коммита, но для демонстрации хватит.
+deploy-in-kubernetes:
+  stage: deploy
+  only:
+    - master
+  allow_failure: true
+  before_script:
+    - cd kubernetes
+    # ToDo:создать отдельный namespace для проверки перед деплоем
+    - check_deployment=$(kubectl get deployment book-store --ignore-not-found=true)
+    - echo $check_deployment
+  script:
+    # ToDo: Упаковать все конфиги в Helm шаблоны
+    - |-
+      if [ -z "${check_deployment}" ] ; then
+          echo "INIT"
+          # Импорт общей конфигураций
+          kubectl apply -f config/book-store-config.yaml
+          # Деплой PostgreSQL
+          #kubectl apply -f db/postgres-config.yaml
+          #kubectl apply -f db/storage_postgres.yaml
+          #kubectl apply -f db/postgres.yaml
+          # Деплой book-store
+          kubectl apply -f book-store/service_book-store.yaml
+          kubectl apply -f book-store/ingress_book-store.yaml
+          kubectl apply -f book-store/deploy_book-store.yaml
+      else 
+          echo "UPDATE"
+          # Импорт общей конфигураций
+          kubectl apply -f config/book-store-config.yaml
+          # Деплой book-store
+          kubectl apply -f book-store/service_book-store.yaml
+          kubectl apply -f book-store/ingress_book-store.yaml
+          kubectl rollout restart deployment book-store
+      fi
+  after_script:
+    # Проверка и установка INGRESS плагина (NGINX)
+    - |-
+      check_ing=$(kubectl get all -n ingress-nginx --ignore-not-found=true)
+      if [ -z "${check_ing}" ] ; then
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+      else 
+          kubectl get pods 
+      fi

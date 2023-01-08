@@ -35,6 +35,9 @@ public class BookController {
 
     private final UserRepository userRepository;
 
+    private final UserService userService;
+
+
 
     @GetMapping("/home")
     public String home() {
@@ -47,9 +50,6 @@ public class BookController {
         model.addAttribute("title", "Книги");
         return "book";
     }
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -159,7 +159,7 @@ public class BookController {
     }
 
     @GetMapping("/genres")
-    public String genres(Model model) {
+    public String genres(Model model, @AuthenticationPrincipal User currentUser) {
         model.addAttribute("genres", genreRepository.findAll());
         return "genreChose";
     }

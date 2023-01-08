@@ -30,5 +30,3 @@ target/
 *.class
 /.gradle/
 /build/
-/report-beans/.gradle/
-/report-beans/build/

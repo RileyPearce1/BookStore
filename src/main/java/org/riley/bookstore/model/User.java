@@ -41,16 +41,6 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();   // Роли пользователя
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
     @Transient
     private String passwordConfirm;
 

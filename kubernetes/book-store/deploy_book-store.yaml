@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-store
+  strategy:
+    # стратегия обновления без downtime (уже в % можно писать при большом кол-ве реплик)
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: book-store
+    spec:
+      containers:
+        - image: devalurum/book-store:latest
+          name: book-store
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8085
+          envFrom:
+            - configMapRef:
+                name: book-store-config
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_PORT
+              value: 5432
+            - name: DATABASE_NAME
+              value: stock_system
+            - name: DATABASE_USER
+              value: postgres
+            - name: DATABASE_NAME
+              value: 12345
