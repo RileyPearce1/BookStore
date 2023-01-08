@@ -1,0 +1,32 @@
+name: push-to-gitlab
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+    branches:
+      - master
+
+jobs:
+  push-to-gitlab:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+        fetch-depth: 0
+
+    - name: Push To Gitlab
+      env:
+        token: ${{ secrets.GITLAB_TOKEN }}
+      run: |
+        echo Starting to push repo to gitlab
+        git config user.name "devalurum"
+        git config user.email "sahaheh@mail.ru"
+        git remote set-url origin "https://oauth2:${token}@gitlab.com/devalurum/BookStore.git"
+        git push origin master
