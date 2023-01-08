@@ -36,6 +36,9 @@
                 <form th:if="${isInBasket} == false" th:action="'/book/' + ${el.id} + '/addToBasket'" method="post"> <!--method="book" - информация передаётся в теле запроса-->
                     <button class="btn btn-warning" style="color: #fff; background-color: #ef2323; border-color: #ef2323" type="submit">Добавить в корзину</button> <!--type="submit" - перезагрузка страницы и отправка данных на сервер при нажатии на кнопку-->
                 </form>
+                <form th:if="${isInBasket} == true" th:action="'/book/' + ${el.id} + '/removeFromBasketFromDetails'" method="post"> <!--method="book" - информация передаётся в теле запроса-->
+                    <button class="btn btn-warning" style="color: #fff; background-color: #ef2323; border-color: #ef2323" type="submit">Убрать из корзины</button> <!--type="submit" - перезагрузка страницы и отправка данных на сервер при нажатии на кнопку-->
+                </form>
                 </div>
             </div>
         </div>

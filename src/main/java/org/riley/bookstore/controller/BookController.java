@@ -182,6 +182,17 @@ public class BookController {
         return "redirect:/basket";
     }
 
+    @PostMapping("/book/{id}/removeFromBasketFromDetails")
+    public String removeFromBasketFromDetails(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+        User user = userRepository.getReferenceById(currentUser.getId());
+        List<Book> books = user.getBasket();
+        Book book = bookRepository.getReferenceById(id);
+        books.removeIf(b -> b.getTitle().equals(book.getTitle()));
+        user.setBasket(books);
+        userRepository.save(user);
+        return "redirect:/book/{id}";
+    }
+
 
     @GetMapping("/genre/add")
     public String addGenre() {
