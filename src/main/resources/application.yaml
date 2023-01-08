@@ -16,7 +16,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/webbook
     username: postgres
-    password: Pershakov757
+    password: 12345
     driverClassName: org.postgresql.Driver
   jpa:
     database: postgresql
@@ -24,14 +24,14 @@ spring:
     open-in-view: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: false
-    generate-ddl: true
+    generate-ddl: false
     properties:
       hibernate:
         hbm2ddl:
           import_files: init.sql
-          auto: create-drop
+          auto: none
         format_sql: false
         generate_statistics: false
   sql.init.mode: never
